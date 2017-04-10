@@ -8,7 +8,6 @@ python:
 - "3.5"
 - "3.6-dev"
 - "3.7-dev"
-- pypy3.3-5.2-alpha1
 script:
 - nosetests -v
 
