@@ -10,7 +10,11 @@ python:
 - "3.5"
 - "3.6"
 - "3.7-dev"
+install:
+- pip install pydiatra pyflakes
 script:
 - nosetests -v
+- python -m pydiatra test.py
+- pyflakes test.py
 
 # vim:ts=2 sts=2 sw=2 et
