@@ -34,7 +34,7 @@ def t(ver):
     try:
         code = file.read()
     finally:
-        pass
+        file.close()
     try:
         exec(code, {}, {})
     except SyntaxError:
