@@ -1,1 +1,1 @@
-f''  # Python >= 3.6 is required
+0_0  # Python >= 3.6 is required
