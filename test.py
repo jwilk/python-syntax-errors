@@ -21,7 +21,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import distutils.version
 import glob
 import re
 import sys
@@ -46,9 +45,13 @@ def t(ver):
             raise AssertionError('%s is syntacticaly valid with Python %d.%d' % (path, pyver[0], pyver[1]))
 
 def test():
-    for path in sorted(glob.glob('since-*.py'), key=distutils.version.LooseVersion):
+    versions = []
+    for path in glob.glob('since-*.py'):
         match = re.match('^since-([0-9.]+)[.]py$', path)
         ver = match.group(1)
+        key = tuple(map(int, ver.split('.')))
+        versions += [(key, ver)]
+    for _, ver in sorted(versions):
         yield (t, ver)
 
 def main():
