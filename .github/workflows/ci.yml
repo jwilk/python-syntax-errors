@@ -36,10 +36,7 @@ jobs:
         python-version: ${{matrix.python-version}}
     - name: run tests
       run: |
-        python -m pip install --no-binary ':all:' nose
-        # work-around for <https://github.com/nose-devs/nose/issues/1116>:
-        sed -i -e 's/ from unittest import _TextTestResult$/ from unittest import TextTestResult as _TextTestResult/' /opt/hostedtoolcache/Python/*/*/lib/python*/site-packages/nose/result.py
-        nosetests -v
+        python test.py -v
     - name: run pydiatra
       run: |
         pip install pydiatra

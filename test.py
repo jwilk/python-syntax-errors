@@ -24,6 +24,7 @@
 import glob
 import re
 import sys
+import unittest
 
 pyver = sys.version_info
 
@@ -44,21 +45,30 @@ def t(ver):
         if pyver < ver:
             raise AssertionError('%s is syntacticaly valid with Python %d.%d' % (path, pyver[0], pyver[1]))
 
-def test():
+class Test(unittest.TestCase):
+
+    def _test(self, version):
+        t(version)
+
+    def __str__(self):
+        version = unittest.TestCase.__str__(self).split('|')[1]
+        return 'Python ' + version
+
+def add_tests():
     versions = []
     for path in glob.glob('since-*.py'):
         match = re.match('^since-([0-9.]+)[.]py$', path)
         ver = match.group(1)
         key = tuple(map(int, ver.split('.')))
         versions += [(key, ver)]
-    for _, ver in sorted(versions):
-        yield (t, ver)
+    for i, (_, ver) in enumerate(sorted(versions)):
+        def method(self, ver=ver):
+            t(ver)
+        setattr(Test, 'test_%02d|%s|' % (i, ver), method)
 
-def main():
-    for t, arg in test():
-        t(arg)
+add_tests()
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
 
 # vim:ts=4 sts=4 sw=4 et
