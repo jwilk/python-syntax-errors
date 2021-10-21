@@ -8,8 +8,26 @@ jobs:
     strategy:
       matrix:
         include:
+        - python-version: '2.3'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
+        - python-version: '2.4'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
+        - python-version: '2.5'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
+        - python-version: '2.6'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
         - python-version: '2.7'
           os: ubuntu-20.04
+        - python-version: '3.1'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
+        - python-version: '3.2'
+          os: ubuntu-18.04
+          deadsnakes: deadsnakes
         - python-version: '3.3'
           os: ubuntu-18.04
         - python-version: '3.4'
@@ -34,13 +52,23 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
+      if: ${{!matrix.deadsnakes}}
+    - name: Set up Python ${{matrix.python-version}} (via deadsnakes PPA)
+      run: |
+        sudo apt-add-repository -y ppa:deadsnakes/ppa
+        sudo apt-get install python${{matrix.python-version}}
+      if: ${{matrix.deadsnakes}}
     - name: run tests
       run: |
-        python test.py -v
+        v=${{matrix.python-version}}
+        v=${v%-*}
+        python$v -c 'import sys; print(sys.version)'
+        python$v test.py -v
     - name: run pydiatra
       run: |
         pip install pydiatra
         python -m pydiatra test.py
+      if: ${{!matrix.deadsnakes}}
     - name: run pyflakes
       run: |
         pyflakes=pyflakes
@@ -48,5 +76,6 @@ jobs:
         if [[ ${{matrix.python-version}} = 3.[23] ]]; then pyflakes+='<2'; fi
         pip install $pyflakes
         pyflakes test.py
+      if: ${{!matrix.deadsnakes}}
 
 # vim:ts=2 sts=2 sw=2 et
