@@ -77,5 +77,10 @@ jobs:
         pip install $pyflakes
         pyflakes test.py
       if: ${{!matrix.deadsnakes}}
+    - name: check README syntax
+      run: |
+        python3 -m pip install --user pygments restructuredtext-lint
+        rst-lint --level=info --encoding=UTF-8 README
+      if: ${{!matrix.deadsnakes}}
 
 # vim:ts=2 sts=2 sw=2 et
