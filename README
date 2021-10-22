@@ -1,0 +1,22 @@
+This is a collection of code snippets that are syntactically valid
+only since Python *X*.\ *Y*, for most *X*.\ *Y* ≥ 2.4.
+
+For example:
+
+.. code:: python
+
+   0_0  # Python >= 3.6 is required
+
+The idea is to put such a snippet near the top of your file.
+If a user inadvertently ran the code it against an older version,
+they would get a somewhat useful error message:
+
+.. code:: console
+
+   $ python3.5 since-3.6.py
+     File "since-3.6.py", line 1
+       0_0  # Python >= 3.6 is required
+         ^
+   SyntaxError: invalid syntax
+
+.. vim:ft=rst ts=3 sts=3 sw=3 et
