@@ -8,7 +8,7 @@ For example:
    0_0  # Python >= 3.6 is required
 
 The idea is to put such a snippet near the top of your file.
-If a user inadvertently ran the code it against an older version,
+If a user inadvertently ran the code against an older version,
 they would get a somewhat useful error message:
 
 .. code:: console
