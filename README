@@ -1,4 +1,4 @@
-This is a collection of code snippets that are syntactically valid
+This is a collection of statements that are syntactically valid
 only since Python *X*.\ *Y*, for most *X*.\ *Y* ≥ 2.4.
 
 For example:
@@ -7,7 +7,7 @@ For example:
 
    0_0  # Python >= 3.6 is required
 
-The idea is to put such a snippet near the top of your file.
+The idea is to put such a statement near the top of your file.
 If a user inadvertently ran the code against an older version,
 they would get a somewhat useful error message:
 
