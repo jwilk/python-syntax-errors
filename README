@@ -1,4 +1,4 @@
-This is a collection of statements that are syntactically valid
+This is a collection of no-op statements that are syntactically valid
 only since Python *X*.\ *Y*, for most *X*.\ *Y* ≥ 2.4.
 
 For example:
