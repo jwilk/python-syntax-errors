@@ -48,12 +48,12 @@ jobs:
           os: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{matrix.python-version}}
+    - name: set up Python ${{matrix.python-version}}
       uses: actions/setup-python@v2
       with:
         python-version: ${{matrix.python-version}}
       if: ${{!matrix.deadsnakes}}
-    - name: Set up Python ${{matrix.python-version}} (via deadsnakes PPA)
+    - name: set up Python ${{matrix.python-version}} (via deadsnakes PPA)
       run: |
         sudo apt-add-repository -y ppa:deadsnakes/ppa
         sudo apt-get install python${{matrix.python-version}}
