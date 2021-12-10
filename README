@@ -9,7 +9,7 @@ For example:
 
 The idea is to put such a statement near the top of your file.
 If a user inadvertently ran the code against an older version,
-they would get a somewhat useful error message:
+they would get a fairly helpful error message:
 
 .. code:: console
 
