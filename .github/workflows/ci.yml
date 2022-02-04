@@ -57,13 +57,19 @@ jobs:
       run: |
         sudo apt-add-repository -y ppa:deadsnakes/ppa
         sudo apt-get install python${{matrix.python-version}}
+        mkdir -p ~/.local/bin
+        ln -s /usr/bin/python${{matrix.python-version}} ~/.local/bin/python
       if: ${{matrix.deadsnakes}}
+    - name: check Python version
+      run: |
+        python -c 'import sys; print(sys.version)'
+        v0=${{matrix.python-version}}
+        v0=${v0%-*}
+        v1=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+        diff -u <(echo "$v0") <(echo "$v1")
     - name: run tests
       run: |
-        v=${{matrix.python-version}}
-        v=${v%-*}
-        python$v -c 'import sys; print(sys.version)'
-        python$v test.py -v
+        python test.py -v
     - name: run pydiatra
       run: |
         pip install pydiatra
