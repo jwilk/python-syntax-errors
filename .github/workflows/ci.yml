@@ -85,7 +85,7 @@ jobs:
       if: ${{!matrix.deadsnakes}}
     - name: check README syntax
       run: |
-        python3 -m pip install pygments restructuredtext-lint
+        python3 -m pip install restructuredtext-lint pygments
         rst-lint --level=info --encoding=UTF-8 README
       if: ${{!matrix.deadsnakes}}
 
