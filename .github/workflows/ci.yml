@@ -73,7 +73,7 @@ jobs:
     - name: run pydiatra
       run: |
         pip install pydiatra
-        python -m pydiatra test.py
+        python -m pydiatra -v test.py
       if: ${{!matrix.deadsnakes}}
     - name: run pyflakes
       run: |
