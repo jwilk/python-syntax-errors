@@ -55,6 +55,7 @@ jobs:
       if: ${{!matrix.deadsnakes}}
     - name: set up Python ${{matrix.python-version}} (via deadsnakes PPA)
       run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
         sudo apt-add-repository -y ppa:deadsnakes/ppa
         sudo apt-get install python${{matrix.python-version}}
         mkdir -p ~/.local/bin
