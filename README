@@ -19,4 +19,10 @@ they would get a fairly helpful error message:
          ^
    SyntaxError: invalid syntax
 
+This may be a better approach than checking sys.version_info because
+"if the source file contains syntax that is invalid [...], code that's 
+supposed to check the version and throw a helpful exception will never run."¹
+
+¹ https://news.ycombinator.com/item?id=31637428#31637543
+
 .. vim:ft=rst ts=3 sts=3 sw=3 et
