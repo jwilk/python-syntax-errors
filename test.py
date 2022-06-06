@@ -40,10 +40,10 @@ def t(ver):
         exec(code, {}, {})
     except SyntaxError:
         if pyver >= ver:
-            raise AssertionError('%s is not syntacticaly valid with Python %d.%d' % (path, pyver[0], pyver[1]))
+            raise AssertionError('%s is not syntactically valid with Python %d.%d' % (path, pyver[0], pyver[1]))
     else:
         if pyver < ver:
-            raise AssertionError('%s is syntacticaly valid with Python %d.%d' % (path, pyver[0], pyver[1]))
+            raise AssertionError('%s is syntactically valid with Python %d.%d' % (path, pyver[0], pyver[1]))
 
 class Test(unittest.TestCase):
 
