@@ -37,6 +37,7 @@ def t(ver):
     finally:
         file.close()
     try:
+        code = compile(code, path, 'exec')
         exec(code, {}, {})
     except SyntaxError:
         if pyver >= ver:
@@ -45,9 +46,7 @@ def t(ver):
         msg = '# Python >= %d.%d is required' % ver
         msg = msg.replace(' >= 3.0 ', ' 3 ')
         msg_re = re.compile(re.escape(msg) + '\\b')
-        if pyver[:2] == (3, 10) and ver == (3, 11) and exc.text is None:
-            pass # FIXME!
-        elif not msg_re.search(exc.text):
+        if not msg_re.search(exc.text):
             raise AssertionError('%s version requirement message is missing with Python %d.%d' % (path, pyver[0], pyver[1]))
     else:
         if pyver < ver:
