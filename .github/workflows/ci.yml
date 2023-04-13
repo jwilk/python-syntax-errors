@@ -60,7 +60,7 @@ jobs:
       run: |
         python -c 'import sys; print(sys.version)'
         v0=${{matrix.python-version}}
-        v1=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+        v1=$(python -c 'import sys; print(str.join(".", map(str, sys.version_info[:2])))')
         diff -u <(echo "$v0") <(echo "$v1")
     - name: run tests
       run: |
