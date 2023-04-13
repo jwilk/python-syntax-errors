@@ -4,36 +4,77 @@ on:
 - pull_request
 jobs:
   main:
-    runs-on: ${{matrix.os}}
     strategy:
       matrix:
         include:
         - python-version: '2.3'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
+          os: ubuntu:18.04
         - python-version: '2.4'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
+          os: ubuntu:18.04
         - python-version: '2.5'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
+          os: ubuntu:18.04
         - python-version: '2.6'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
+          os: ubuntu:18.04
+        - python-version: '2.7'
+          os: ubuntu:20.04
+        - python-version: '3.1'
+          os: ubuntu:18.04
+        - python-version: '3.2'
+          os: ubuntu:18.04
+        - python-version: '3.3'
+          os: ubuntu:18.04
+        - python-version: '3.4'
+          os: ubuntu:18.04
+        - python-version: '3.5'
+          os: ubuntu:18.04
+        - python-version: '3.6'
+          os: ubuntu:20.04
+        - python-version: '3.7'
+          os: ubuntu:20.04
+        - python-version: '3.8'
+          os: ubuntu:20.04
+        - python-version: '3.9'
+          os: ubuntu:20.04
+        - python-version: '3.10'
+          os: ubuntu:20.04
+        - python-version: '3.11'
+          os: ubuntu:20.04
+        - python-version: '3.12'
+          os: ubuntu:20.04
+    runs-on: ubuntu-latest
+    container: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up Python ${{matrix.python-version}} (via deadsnakes PPA)
+      run: |
+        printf 'Apt::Install-Recommends "false";\n' | tee -a /etc/apt/apt.conf
+        apt-get update
+        apt-get install -y software-properties-common
+        apt-add-repository -y ppa:deadsnakes/ppa
+        apt-get install -y python${{matrix.python-version}}
+        ln -s /usr/bin/python${{matrix.python-version}} /usr/local/bin/python
+    - name: check Python version
+      run: |
+        python -c 'import sys; print(sys.version)'
+        v0=${{matrix.python-version}}
+        v1=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+        diff -u <(echo "$v0") <(echo "$v1")
+    - name: run tests
+      run: |
+        python test.py -v
+
+  static:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        include:
         - python-version: '2.7'
           os: ubuntu-20.04
-        - python-version: '3.1'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
-        - python-version: '3.2'
-          os: ubuntu-18.04
-          deadsnakes: deadsnakes
-        - python-version: '3.3'
-          os: ubuntu-18.04
-        - python-version: '3.4'
-          os: ubuntu-18.04
         - python-version: '3.5'
-          os: ubuntu-18.04
+          os: ubuntu-20.04
         - python-version: '3.6'
           os: ubuntu-20.04
         - python-version: '3.7'
@@ -54,42 +95,17 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{matrix.python-version}}
-      if: ${{!matrix.deadsnakes}}
-    - name: set up Python ${{matrix.python-version}} (via deadsnakes PPA)
-      run: |
-        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
-        sudo apt-add-repository -y ppa:deadsnakes/ppa
-        sudo apt-get install python${{matrix.python-version}}
-        mkdir -p ~/.local/bin
-        ln -s /usr/bin/python${{matrix.python-version}} ~/.local/bin/python
-      if: ${{matrix.deadsnakes}}
-    - name: check Python version
-      run: |
-        python -c 'import sys; print(sys.version)'
-        v0=${{matrix.python-version}}
-        v0=${v0%-*}
-        v1=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-        diff -u <(echo "$v0") <(echo "$v1")
-    - name: run tests
-      run: |
-        python test.py -v
     - name: run pydiatra
       run: |
         pip install pydiatra
         python -m pydiatra -v test.py
-      if: ${{!matrix.deadsnakes}}
     - name: run pyflakes
       run: |
-        pyflakes=pyflakes
-        if [[ ${{matrix.python-version}} = 2.6 ]]; then pyflakes+='<2'; fi
-        if [[ ${{matrix.python-version}} = 3.[23] ]]; then pyflakes+='<2'; fi
-        pip install $pyflakes
+        pip install pyflakes
         pyflakes test.py
-      if: ${{!matrix.deadsnakes}}
     - name: check README syntax
       run: |
         python3 -m pip install restructuredtext-lint pygments
         rst-lint --level=info --encoding=UTF-8 README
-      if: ${{!matrix.deadsnakes}}
 
 # vim:ts=2 sts=2 sw=2 et
