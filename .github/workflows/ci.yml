@@ -105,7 +105,7 @@ jobs:
         pyflakes test.py
     - name: check README syntax
       run: |
-        python3 -m pip install restructuredtext-lint pygments
+        pip install restructuredtext-lint pygments
         rst-lint --level=info --encoding=UTF-8 README
 
 # vim:ts=2 sts=2 sw=2 et
