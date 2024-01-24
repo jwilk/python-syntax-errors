@@ -92,9 +92,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: set up Python ${{matrix.python-version}}
+      if: matrix.python-version != '2.7'
       uses: actions/setup-python@v4
       with:
         python-version: ${{matrix.python-version}}
+    - name: set up APT
+      if: matrix.python-version == '2.7'
+      run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update
+    - name: set up Python 2.7 (with APT + get-pip)
+      if: matrix.python-version == '2.7'
+      run: |
+        sudo apt-get install -y python-is-python2 python2-dev
+        wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+        sudo python get-pip.py
+        rm get-pip.py
+    - name: upgrade TLS stack
+      if: matrix.python-version == '2.7'
+      run: |
+        sudo apt-get install --only-upgrade -y ca-certificates libgnutls30
     - name: run pydiatra
       run: |
         pip install pydiatra
