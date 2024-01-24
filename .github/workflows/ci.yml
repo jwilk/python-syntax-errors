@@ -55,6 +55,7 @@ jobs:
         apt-get install -y software-properties-common
         apt-add-repository -y ppa:deadsnakes/ppa
         apt-get install -y python${{matrix.python-version}}
+        ls -l /usr/bin/python${{matrix.python-version}}
         ln -s /usr/bin/python${{matrix.python-version}} /usr/local/bin/python
     - name: check Python version
       run: |
