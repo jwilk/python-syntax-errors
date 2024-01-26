@@ -72,7 +72,7 @@ jobs:
           os: ubuntu-22.04
         - python-version: '3.11'
           os: ubuntu-22.04
-        - python-version: '3.12-dev'
+        - python-version: '3.12'
           os: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
