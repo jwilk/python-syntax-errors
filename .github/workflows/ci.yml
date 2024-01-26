@@ -8,25 +8,25 @@ jobs:
       matrix:
         include:
         - python-version: '2.3'
-          os: ubuntu:18.04
+          os: debian/eol:sarge
         - python-version: '2.4'
-          os: ubuntu:18.04
+          os: debian/eol:sarge
         - python-version: '2.5'
-          os: ubuntu:18.04
+          os: debian/eol:squeeze
         - python-version: '2.6'
-          os: ubuntu:18.04
+          os: debian/eol:squeeze
         - python-version: '2.7'
-          os: ubuntu:20.04
+          os: debian/eol:wheezy
         - python-version: '3.1'
-          os: ubuntu:18.04
+          os: debian/eol:squeeze
         - python-version: '3.2'
-          os: ubuntu:18.04
+          os: debian/eol:wheezy
         - python-version: '3.3'
-          os: ubuntu:18.04
+          os: ubuntu:13.10
         - python-version: '3.4'
-          os: ubuntu:18.04
+          os: ubuntu:14.04
         - python-version: '3.5'
-          os: ubuntu:18.04
+          os: ubuntu:20.04
         - python-version: '3.6'
           os: ubuntu:20.04
         - python-version: '3.7'
@@ -42,30 +42,14 @@ jobs:
         - python-version: '3.12'
           os: ubuntu:20.04
     runs-on: ubuntu-latest
-    container: ${{matrix.os}}
-    defaults:
-      run:
-        shell: bash
     steps:
     - uses: actions/checkout@v3
-    - name: set up Python ${{matrix.python-version}} (via deadsnakes PPA)
-      run: |
-        printf 'Apt::Install-Recommends "false";\n' | tee -a /etc/apt/apt.conf
-        apt-get update
-        apt-get install -y software-properties-common
-        apt-add-repository -y ppa:deadsnakes/ppa
-        apt-get install -y python${{matrix.python-version}}
-        ls -l /usr/bin/python${{matrix.python-version}}
-        ln -s /usr/bin/python${{matrix.python-version}} /usr/local/bin/python
-    - name: check Python version
-      run: |
-        python -c 'import sys; print(sys.version)'
-        v0=${{matrix.python-version}}
-        v1=$(python -c 'import sys; print(str.join(".", map(str, sys.version_info[:2])))')
-        diff -u <(echo "$v0") <(echo "$v1")
+    - name: build Docker image
+      run:
+        docker build --build-arg=image=${{matrix.os}} --build-arg=pyver=${{matrix.python-version}} --tag=test .
     - name: run tests
       run: |
-        python test.py -v
+        docker run test
 
   static:
     runs-on: ${{matrix.os}}
