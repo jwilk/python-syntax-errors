@@ -26,3 +26,5 @@ ENV PYTHON python${pyver}
 CMD cd /srv \
   && ${PYTHON} -c 'import sys; print(sys.version)' \
   && ${PYTHON} test.py -v
+
+# vim:ts=4 sts=4 sw=4 et
