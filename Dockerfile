@@ -2,7 +2,7 @@ ARG image
 FROM ${image}
 RUN printf 'Apt::Install-Recommends "false";\n' | tee -a /etc/apt/apt.conf
 RUN \
-  if grep '"Ubuntu 1[0-3]' /etc/os-release; \
+  if grep '"Ubuntu 1[0-3]' /etc/lsb-release; \
   then \
     sed -i 's,/archive[.]ubuntu[.]com/,/old-releases.ubuntu.com/,g' /etc/apt/sources.list; \
   fi
