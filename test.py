@@ -69,10 +69,12 @@ def add_tests():
         key = tuple(map(int, ver.split('.')))
         versions += [(key, ver)]
     versions.sort()
-    for i, (_, ver) in enumerate(versions):
+    i = 0
+    for _, ver in versions:
         def method(self, ver=ver):
             t(ver)
         setattr(Test, 'test_%02d|%s|' % (i, ver), method)
+        i += 1
 
 add_tests()
 
