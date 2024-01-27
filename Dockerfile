@@ -6,6 +6,12 @@ RUN \
   then \
     sed -i 's,/archive[.]ubuntu[.]com/,/old-releases.ubuntu.com/,g' /etc/apt/sources.list; \
   fi
+ARG pyver
+RUN \
+  if [ ${pyver} = 3.0 ] && grep -w lucid /etc/apt/sources.list; \
+  then \
+    sed -i 's/lucid/karmic/g' /etc/apt/sources.list; \
+  fi
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN \
@@ -14,7 +20,6 @@ RUN \
     apt-get install -y software-properties-common && \
     apt-add-repository -y ppa:deadsnakes/ppa; \
   fi
-ARG pyver
 RUN apt-get -o APT::Cmd::Pattern-Only=true install -y python${pyver}
 COPY *.py /srv/
 ENV PYTHON python${pyver}
