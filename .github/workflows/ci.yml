@@ -7,6 +7,10 @@ jobs:
     strategy:
       matrix:
         include:
+        - python-version: '2.1'
+          os: debian/eol:woody
+        - python-version: '2.2'
+          os: debian/eol:woody
         - python-version: '2.3'
           os: debian/eol:sarge
         - python-version: '2.4'
