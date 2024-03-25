@@ -1,1 +1,1 @@
-lambda x, /: 0  # Python >= 3.8 is required
+lambda x, /: x  # Python >= 3.8 is required
