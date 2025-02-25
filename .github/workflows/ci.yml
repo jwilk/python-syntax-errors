@@ -65,11 +65,7 @@ jobs:
       matrix:
         include:
         - python-version: '2.7'
-          os: ubuntu-20.04
-        - python-version: '3.6'
-          os: ubuntu-20.04
-        - python-version: '3.7'
-          os: ubuntu-20.04
+          os: ubuntu-22.04
         - python-version: '3.8'
           os: ubuntu-22.04
         - python-version: '3.9'
@@ -97,7 +93,8 @@ jobs:
     - name: set up Python 2.7 (with APT + get-pip)
       if: matrix.python-version == '2.7'
       run: |
-        sudo apt-get install -y python-is-python2
+        sudo apt-get install -y python2
+        sudo ln -sf python2 /usr/bin/python
         wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
         sudo python get-pip.py
         rm get-pip.py
