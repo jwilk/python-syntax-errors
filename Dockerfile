@@ -17,7 +17,7 @@ RUN apt-get update
 RUN \
   if grep '"Ubuntu 2' /etc/os-release; \
   then \
-    apt-get install -y software-properties-common && \
+    apt-get install -y software-properties-common gpg-agent && \
     apt-add-repository -y ppa:deadsnakes/ppa; \
   fi
 RUN apt-get -o APT::Cmd::Pattern-Only=true install -y python${pyver}
