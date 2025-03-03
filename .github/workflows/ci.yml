@@ -115,4 +115,24 @@ jobs:
         pip install restructuredtext-lint pygments
         rst-lint --level=info --encoding=UTF-8 README
 
+  pylint:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        include:
+        - python-version: '3.13'
+          os: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: set up Python ${{matrix.python-version}}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{matrix.python-version}}
+    - name: install pylint
+      run: |
+        python3 -m pip install pylint
+    - name: run pylint
+      run: |
+        python3 -m pylint since-*.py
+
 # vim:ts=2 sts=2 sw=2 et
