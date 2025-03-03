@@ -1,1 +1,1 @@
-rb''  # Python >= 3.3 is required
+sum(rb'')  # Python >= 3.3 is required

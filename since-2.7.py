@@ -1,1 +1,1 @@
-{0}  # Python >= 2.7 is required
+sum({0})  # Python >= 2.7 is required

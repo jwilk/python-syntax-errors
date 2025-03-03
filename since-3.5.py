@@ -1,1 +1,1 @@
-[*()]  # Python >= 3.5 is required
+sum([*()])  # Python >= 3.5 is required

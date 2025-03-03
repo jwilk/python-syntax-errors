@@ -1,1 +1,1 @@
-f'{''}'  # Python >= 3.12 is required
+sum(f'{''}')  # Python >= 3.12 is required

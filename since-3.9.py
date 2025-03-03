@@ -1,3 +1,5 @@
-if 0:
+if int():
+    # pylint: disable=missing-function-docstring
     @0  # Python >= 3.9 is required
-    def f(): pass
+    def _():
+        pass
