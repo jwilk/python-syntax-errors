@@ -1,0 +1,13 @@
+[BASIC]
+module-rgx = .
+
+[MESSAGES CONTROL]
+disable =
+    missing-module-docstring
+
+[REPORTS]
+reports = no
+score = no
+msg-template = {path}:{line}: {C}: {symbol} [{obj}] {msg}
+
+# vim:ft=dosini ts=4 sts=4 sw=4 et
