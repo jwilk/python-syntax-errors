@@ -1,4 +1,5 @@
 name: CI
+permissions: {}
 on:
 - push
 - pull_request
@@ -49,6 +50,8 @@ jobs:
           os: ubuntu:20.04
         - python-version: '3.13'
           os: ubuntu:20.04
+        - python-version: '3.14'
+          os: ubuntu:24.04
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
