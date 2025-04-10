@@ -1,4 +1,4 @@
 try:
     pass
-except Exception, Exception, Exception:  # Python >= 3.14 is required
+except Warning, Warning, Warning:  # Python >= 3.14 is required
     pass
