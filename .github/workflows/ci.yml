@@ -88,6 +88,8 @@ jobs:
           os: ubuntu-22.04
         - python-version: '3.13'
           os: ubuntu-24.04
+        - python-version: '3.14'
+          os: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
     - name: set up Python ${{matrix.python-version}}
