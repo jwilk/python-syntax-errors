@@ -55,12 +55,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: build Docker image
+    - name: set up APT
+      run: |
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update
+    - name: install podman
+      run: |
+        sudo apt-get install podman
+    - name: build podman image
       run:
-        docker build --build-arg=image=${{matrix.os}} --build-arg=pyver=${{matrix.python-version}} --tag=test .
+        podman build --build-arg=image=${{matrix.os}} --build-arg=pyver=${{matrix.python-version}} --tag=test .
     - name: run tests
       run: |
-        docker run test
+        podman run test
 
   static:
     runs-on: ${{matrix.os}}
