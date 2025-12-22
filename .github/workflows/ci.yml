@@ -123,6 +123,7 @@ jobs:
         pip install pyflakes
         pyflakes test.py
     - name: check README syntax
+      if: matrix.python-version != '2.7'
       run: |
         pip install restructuredtext-lint pygments
         rst-lint --level=info README
