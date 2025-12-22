@@ -1,1 +1,1 @@
-t''  # Python >= 3.14 is required
+type(t'')  # Python >= 3.14 is required
