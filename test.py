@@ -71,6 +71,7 @@ def add_tests():
     i = 0
     for _, ver in versions:
         def method(self, ver=ver):
+            del self
             t(ver)
         setattr(Test, 'test_%02d|%s|' % (i, ver), method)
         i += 1
